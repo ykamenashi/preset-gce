@@ -1,0 +1,28 @@
+#!/bin/bash
+
+COMPUTE_MACHINE_TYPE=n1-standard-1
+BOOT_DISK_SIZE=50
+BOOT_DISK_IMAGE_PROJECT=centos-cloud
+BOOT_DISK_IMAGE_FAMILY=centos-8
+COMPUTE_VPC_NETWORK=default
+COMPUTE_VPC_SUBNETWORK=default
+COMPUTE_REGION=asia-northeast1
+COMPUTE_ZONE=${COMPUTE_REGION}-b
+
+if [ $# -lt 1 ] ; then
+cat << EOM
+  usage
+  $0: $0 new-instance-name
+
+EOM
+  exit 0
+fi
+NEW_INSTANCE_NAME=$1
+CMDLN="gcloud compute instances create ${NEW_INSTANCE_NAME} --machine-type=$COMPUTE_MACHINE_TYPE"
+CMDLN="$CMDLN --image-project=$BOOT_DISK_IMAGE_PROJECT --image-family=$BOOT_DISK_IMAGE_FAMILY"
+CMDLN="$CMDLN --boot-disk-size $BOOT_DISK_SIZE"
+CMDLN="$CMDLN --network=$COMPUTE_VPC_NETWORK --subnet=$COMPUTE_VPC_SUBNETWORK"
+CMDLN="$CMDLN --zone=$COMPUTE_ZONE"
+
+echo "$CMDLN"; echo ''
+$CMDLN
