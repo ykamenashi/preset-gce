@@ -1,0 +1,2 @@
+# preset-gce
+Terraform書くほどじゃないけどgcloud compute instances createいちいち覚えたくないしウザいので楽にするやつ
